@@ -19,6 +19,14 @@ class myQueue
 public:
 	myQueue(): m_first(NULL), m_last(NULL){}
 	~myQueue(){ delete m_last; }
+	void push(const T & newElement){
+		if(m_first == NULL)
+			m_first = m_last = new QElement(newElement);
+		else{
+			m_last->m_previous = new QElement(newElement,m_last);
+			m_last = m_last->m_previous;
+		}
+	}
 private:
 	QElement * m_first;
 	QElement * m_last;
