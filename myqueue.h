@@ -42,6 +42,16 @@ public:
 	T & back(){ return m_last->m_value; }
 	T & first(){ return m_first->m_value; }
 	T & last(){ return m_last->m_value; }
+	bool empty(){ return m_first == NULL; }
+	size_t size(){
+		QElement * tmp = m_last;
+		size_t cnt = 0;
+		while(tmp != NULL){
+			++cnt;
+			tmp = tmp->m_next;
+		}
+		return cnt;
+	}
 private:
 	QElement * m_first;
 	QElement * m_last;
