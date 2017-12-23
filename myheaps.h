@@ -5,7 +5,7 @@
 
 #define father(x) ( (x+1)/2 -1 )
 #define leftSon(x) ( 2*(x+1) -1 )
-#define RightSon(x) ( (2*x)+1 )
+#define rightSon(x) ( (2*(x+1)) )
 
 template<class T>
 class myHeap
@@ -38,6 +38,7 @@ public:
 		++m_size;
 	}
 	virtual void bubbleUp(const size_t index) = 0;
+	virtual void bubbleDown(const size_t index = 0) = 0;
 	size_t size(){ return m_size; }
 	T & getTop(){ return m_array[0]; }
 protected:
@@ -46,6 +47,10 @@ protected:
 			m_array[index1] = m_array[index2];
 			m_array[index2] = tmp;
 	}
+	void prepareExtraction(){
+		swap(0,--m_size);
+	}
+	T & getExtracted(){ return m_array[m_size]; }
 	T & at(const size_t index){ return m_array[index]; }
 	T * m_array;
 	size_t m_size;
@@ -71,6 +76,27 @@ public:
 		}
 	}
 	T & getMin(){ return myHeap<T>::getTop(); }
+	T extractMin(){
+		myHeap<T>::prepareExtraction();
+		bubbleDown();
+		return myHeap<T>::getExtracted();
+	}
+	void bubbleDown(const size_t index = 0) override{
+		uint currIndex = index;
+		while(leftSon(currIndex) < myHeap<T>::size()){
+			if( !( myHeap<T>::at(leftSon(currIndex)) < myHeap<T>::at(currIndex) ) &&
+				(rightSon(currIndex) >= myHeap<T>::size() || !( myHeap<T>::at(rightSon(currIndex)) < myHeap<T>::at(currIndex) )) )
+				break;
+			else if( rightSon(currIndex)>=myHeap<T>::size() || !( myHeap<T>::at(rightSon(currIndex)) < myHeap<T>::at(leftSon(currIndex)) ) ){
+				myHeap<T>::swap(currIndex,leftSon(currIndex));
+				currIndex = leftSon(currIndex);
+			}
+			else{
+				myHeap<T>::swap(currIndex,rightSon(currIndex));
+				currIndex = rightSon(currIndex);
+			}
+		}
+	}
 };
 
 template<class T>
@@ -92,6 +118,27 @@ public:
 		}
 	}
 	T & getMax(){ return myHeap<T>::getTop(); }
+	T extractMax(){
+		myHeap<T>::prepareExtraction();
+		bubbleDown();
+		return myHeap<T>::getExtracted();
+	}
+	void bubbleDown(const size_t index = 0) override{
+		uint currIndex = index;
+		while(leftSon(currIndex) < myHeap<T>::size()){
+			if( !( myHeap<T>::at(currIndex) < myHeap<T>::at(leftSon(currIndex)) ) &&
+				(rightSon(currIndex) >= size || !( myHeap<T>::at(currIndex) < myHeap<T>::at(rightSon(currIndex)) )) )
+				break;
+			else if( rightSon(currIndex)>=myHeap<T>::size() || !( myHeap<T>::at(leftSon(currIndex)) < myHeap<T>::at(rightSon(currIndex)) ) ){
+				myHeap<T>::swap(currIndex,leftSon(currIndex));
+				currIndex = leftSon(currIndex);
+			}
+			else{
+				myHeap<T>::swap(currIndex,rightSon(currIndex));
+				currIndex = rightSon(currIndex);
+			}
+		}
+	}
 };
 
 #endif
