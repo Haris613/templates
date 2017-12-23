@@ -27,6 +27,17 @@ public:
 			m_last = m_last->m_previous;
 		}
 	}
+	void pop(){
+		if(m_first == NULL)
+			return;
+		QElement * tmp = m_first->m_previous;
+		delete m_first;
+		m_first = tmp;
+		if(m_first != NULL)
+			m_first->m_next = NULL;
+		else
+			m_last = NULL;
+	}
 private:
 	QElement * m_first;
 	QElement * m_last;
