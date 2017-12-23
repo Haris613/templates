@@ -17,7 +17,7 @@ class myQueue
 		QElement * m_previous;
 	};
 public:
-	myQueue(): m_first(NULL), m_last(NULL){}
+	myQueue(): m_first(NULL), m_last(NULL), m_size(0){}
 	~myQueue(){ delete m_last; }
 	void push(const T & newElement){
 		if(m_first == NULL)
@@ -26,6 +26,7 @@ public:
 			m_last->m_previous = new QElement(newElement,m_last);
 			m_last = m_last->m_previous;
 		}
+		++m_size;
 	}
 	void pop(){
 		if(m_first == NULL)
@@ -37,24 +38,18 @@ public:
 			m_first->m_next = NULL;
 		else
 			m_last = NULL;
+		--m_size;
 	}
 	T & front(){ return m_first->m_value; }
 	T & back(){ return m_last->m_value; }
 	T & first(){ return m_first->m_value; }
 	T & last(){ return m_last->m_value; }
 	bool empty(){ return m_first == NULL; }
-	size_t size(){
-		QElement * tmp = m_last;
-		size_t cnt = 0;
-		while(tmp != NULL){
-			++cnt;
-			tmp = tmp->m_next;
-		}
-		return cnt;
-	}
+	size_t size(){ return m_size; }
 private:
 	QElement * m_first;
 	QElement * m_last;
+	size_t m_size;
 };
 
 #endif
