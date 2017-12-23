@@ -39,6 +39,7 @@ public:
 	}
 	virtual void bubbleUp(const size_t index) = 0;
 	size_t size(){ return m_size; }
+	T & getTop(){ return m_array[0]; }
 protected:
 	void swap(const size_t index1, const size_t index2){
 			T tmp = m_array[index1];
@@ -69,6 +70,7 @@ public:
 			index = father(index);
 		}
 	}
+	T & getMin(){ return myHeap<T>::getTop(); }
 };
 
 template<class T>
@@ -89,6 +91,7 @@ public:
 			index = father(index);
 		}
 	}
+	T & getMax(){ return myHeap<T>::getTop(); }
 };
 
 #endif
