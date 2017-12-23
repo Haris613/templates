@@ -38,6 +38,10 @@ public:
 		else
 			m_last = NULL;
 	}
+	T & front(){ return m_first->m_value; }
+	T & back(){ return m_last->m_value; }
+	T & first(){ return m_first->m_value; }
+	T & last(){ return m_last->m_value; }
 private:
 	QElement * m_first;
 	QElement * m_last;
