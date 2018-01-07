@@ -12,7 +12,7 @@ public:
 	typedef T* iterator;
 	myVector():m_size(0), m_capacity(1){}
 	~myVector(){
-		delete m_array;
+		delete[] m_array;
 	}
 	iterator begin(){ return m_array; }
 	iterator end(){ return m_array+m_size; }
@@ -33,7 +33,7 @@ public:
 
 		for (size_t i = 0; i < m_size; ++i)
 			tmp[i] = m_array[i];
-		delete m_array;
+		delete[] m_array;
 
 		m_array = tmp;
 		m_capacity = newCapacity;
@@ -45,13 +45,13 @@ public:
 
 		for (size_t i = 0; i < m_size; ++i)
 			tmp[i] = m_array[i];
-		delete m_array;
+		delete[] m_array;
 
 		m_array = tmp;
 		m_capacity = m_size;
 	}
 	void clear(){
-		delete m_array;
+		delete[] m_array;
 		m_array = new T[m_capacity];
 		m_size = 0;
 	}
