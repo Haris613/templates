@@ -65,6 +65,35 @@ public:
 			return;
 		--m_size;
 	}
+	//todo make these functions so they can operate on basis of iterators(and maybe make better iterator...)
+	void insert(const size_t n, const T & newElement){
+		if(m_size+1 >= m_capacity)
+			m_capacity*=2;
+
+		T * tmp = new T[m_capacity];
+
+		for (size_t i = 0; i < n; ++i)
+			tmp[i] = m_array[i];
+		tmp[n] = newElement;
+		for (size_t i = n; i < m_size; ++i)
+			tmp[i+1] = m_array[i];
+		delete[] m_array;
+		m_array = tmp;
+		++m_size;
+	}
+	void erase(const size_t n){
+		if(n>=m_size)
+			return;
+		T * tmp = new T[m_capacity];
+
+		for (size_t i = 0; i < n; ++i)
+			tmp[i] = m_array[i];
+		for (size_t i = n+1; i < m_size; ++i)
+			tmp[i-1] = m_array[i];
+		delete[] m_array;
+		m_array = tmp;
+		--m_size;
+	}
 	
 private:
 	T * m_array;
