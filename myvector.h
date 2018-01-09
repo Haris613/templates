@@ -65,7 +65,14 @@ public:
 			return;
 		--m_size;
 	}
-	//todo make these functions so they can operate on basis of iterators(and maybe make better iterator...)
+	void insert(const iterator position, const T & newElement){
+		if(position-m_array >= 0)
+			this->insert((size_t)(position-m_array),newElement);
+	}
+	void erase(const iterator position){
+		if(position-m_array >= 0)
+			this->erase((size_t)(position-m_array));
+	}
 	void insert(const size_t n, const T & newElement){
 		if(m_size+1 >= m_capacity)
 			m_capacity*=2;
