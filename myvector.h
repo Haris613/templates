@@ -94,7 +94,13 @@ public:
 		m_array = tmp;
 		--m_size;
 	}
-	
+	iterator find(const T & value){
+		for (iterator it = this->begin(); it != this->end(); ++it)
+			if(*it == value)
+				return it;
+		return this->end();
+	}
+
 private:
 	T * m_array;
 	size_t m_size;
