@@ -12,6 +12,11 @@ class myHeap
 {
 public:
 	myHeap():m_array(NULL), m_size(0), m_capacity(0){}
+	myHeap(const T * array, const size_t arraySize):m_size(arraySize),m_capacity(arraySize){
+		m_array = new T[m_capacity];
+		for (size_t i = 0; i < arraySize; ++i)
+			m_array[i] = array[i];
+	}
 	~myHeap(){ delete[] m_array; }
 	bool resize(const size_t newCapacity){
 		if(newCapacity<m_size)
@@ -52,6 +57,7 @@ protected:
 	}
 	T & getExtracted(){ return m_array[m_size]; }
 	T & at(const size_t index){ return m_array[index]; }
+	virtual void buildHeap() = 0;
 	T * m_array;
 	size_t m_size;
 	size_t m_capacity;
@@ -62,6 +68,9 @@ class myMinHeap: public myHeap<T>
 {
 public:
 	myMinHeap():myHeap<T>(){}
+	myMinHeap(const T * array, const size_t arraySize):myHeap<T>(array,arraySize){
+		buildHeap();
+	}
 	void insert(const T & newElement) override{
 		myHeap<T>::insert(newElement);
 		bubbleUp(myHeap<T>::size()-1);
@@ -97,6 +106,11 @@ public:
 			}
 		}
 	}
+protected:
+	void buildHeap() override{
+		for (size_t i = myHeap<T>::size()/2+1; i>0 ; --i)
+			bubbleDown(i-1);
+	}
 };
 
 template<class T>
@@ -104,6 +118,9 @@ class myMaxHeap: public myHeap<T>
 {
 public:
 	myMaxHeap():myHeap<T>(){}
+	myMaxHeap(const T * array, const size_t arraySize){
+		buildHeap();
+	}
 	void insert(const T & newElement) override{
 		myHeap<T>::insert(newElement);
 		bubbleUp(myHeap<T>::size()-1);
@@ -138,6 +155,11 @@ public:
 				currIndex = rightSon(currIndex);
 			}
 		}
+	}
+protected:
+	void buildHeap() override{
+		for (size_t i = myHeap<T>::size()/2+1; i>0 ; --i)
+			bubbleDown(i-1);
 	}
 };
 
