@@ -74,4 +74,20 @@ void bubblesort(T * array, size_t size){
 	}
 }
 
+//------------------------------------SELECTSORT------------------------------------
+
+template <typename T>
+void selectsort(T * array, size_t size){
+	for (size_t i = 0; i < size-1; ++i)
+	{
+		size_t min = i;
+		for (size_t j = i + 1; j < size; ++j){
+			if(array[j] < array[min])
+				min = j;
+		}
+		if(min!=i)
+			swap(array[i],array[min]);
+	}
+}
+
 #endif
