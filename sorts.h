@@ -90,4 +90,18 @@ void selectsort(T * array, size_t size){
 	}
 }
 
+//------------------------------------INSERTSORT------------------------------------
+
+template <typename T>
+void insertsort(T * array, size_t size){
+	for (size_t i = 0; i < size-1; ++i)
+	{
+		for (size_t j = i+1; j > 0; --j)
+		{
+			if(array[j] < array[j-1])
+				swap(array[j],array[j-1]);
+		}
+	}
+}
+
 #endif
