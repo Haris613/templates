@@ -1,18 +1,18 @@
 #ifndef _SORTS_H_
 #define _SORTS_H_
 
-//------------------------------------HEAPSORT------------------------------------
-
-#define father(x) ( (x+1)/2 -1 )
-#define leftSon(x) ( 2*(x+1) -1 )
-#define rightSon(x) ( (2*(x+1)) )
-
 template <typename T>
 void swap(T & x, T & y){
 	T tmp = x;
 	x = y;
 	y = tmp;
 }
+
+//------------------------------------HEAPSORT------------------------------------
+
+#define father(x) ( (x+1)/2 -1 )
+#define leftSon(x) ( 2*(x+1) -1 )
+#define rightSon(x) ( (2*(x+1)) )
 
 template <typename T>
 void bubbleDown(T * array, size_t size, const size_t index = 0){
@@ -51,6 +51,27 @@ void heapsort(T * array, size_t size){
 	builMaxHeap(array,size);
 	for (size_t i = size; i > 0; --i)
 		extractMaxToEnd(array,i-1);
+}
+
+//------------------------------------BUBBLESORT------------------------------------
+
+template <typename T>
+void bubblesort(T * array, size_t size){
+	bool done;
+	for (size_t i = 0; i < size-1; ++i)
+	{
+		done = true;
+		for (size_t j = 0; j < size-1-i; ++j)
+		{
+			if(array[j+1] < array[j]){
+				swap(array[j+1],array[j]);
+				done = false;
+			}
+		}
+
+		if(done)
+			break;
+	}
 }
 
 #endif
